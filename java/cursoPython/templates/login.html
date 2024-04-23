@@ -1,20 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="../static/bootstrap.css">
 </head>
+
 <body>
-    <form action="/autenticar" method="post">
-        <fieldset>
-            <legend>Entre com suas informações</legend>
-            <label for="user">Usuário</label>
-            <input type="text" id="user" name="user">
-            <label for="password">Senha</label>
-            <input type="password" id="password" name="password">
-            <input type="submit" value="Acessar">
-        </fieldset>
-    </form>
+    <div class="container">
+        <form action="/autenticar" method="post">
+            <fieldset>
+                <legend>Entre com suas informações</legend>
+                <div class="mb-3">
+                    <label for="user">Usuário</label>
+                    <input type="text" id="user" name="user" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" class="form-control">
+                    <div id="passwordHelpBlock" class="form-text">
+                        Sua senha deve ter de 8 a 20 caracteres, conter letras e números e não deve conter espaços, caracteres especiais ou emoji.
+                    </div>
+                </div>
+                <div class="mb-3"><input type="submit" value="Acessar" class="btn btn-primary"></div>
+            </fieldset>
+        </form>
+    </div>
 </body>
+
 </html>
