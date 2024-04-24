@@ -4,12 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Músicas</title>
+    <title>{{ title }}</title>
     <link rel="stylesheet" href="../static/bootstrap.css">
 
 </head>
 
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="list-unstyled" id="messages">
+                {% for message in messages %}
+                    <li class="alert alert-success">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-body" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">ListMusic</a>
@@ -33,8 +42,9 @@
         </div>
     </nav>
     <div class="container">
-        <h2>Músicas Cadastradas</h2>
+        <h2>{{ title }}</h2>
 
+        {% block conteudo %} {% endblock %}
     </div>
 </body>
 

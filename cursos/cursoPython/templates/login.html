@@ -9,6 +9,16 @@
 </head>
 
 <body>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="list-unstyled" id="messages">
+                {% for message in messages %}
+                    <li class="alert alert-danger">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <div class="container">
         <form action="/autenticar" method="post">
             <fieldset>
@@ -21,7 +31,8 @@
                     <label for="password">Senha</label>
                     <input type="password" id="password" name="password" class="form-control">
                     <div id="passwordHelpBlock" class="form-text">
-                        Sua senha deve ter de 8 a 20 caracteres, conter letras e números e não deve conter espaços, caracteres especiais ou emoji.
+                        Sua senha deve ter de 8 a 20 caracteres, conter letras e números e não deve conter espaços,
+                        caracteres especiais ou emoji.
                     </div>
                 </div>
                 <div class="mb-3"><input type="submit" value="Acessar" class="btn btn-primary"></div>
