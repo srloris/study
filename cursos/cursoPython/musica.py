@@ -1,30 +1,47 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
-
-class Musica:
-    def __init__(self, nome, cantor, genero):
-        self.nome = nome
-        self.cantor = cantor
-        self.genero = genero
-
-
-musica01 = Musica('Pais e Filho', 'Legião Urbana', 'MPB')
-lista = [musica01]
-
-class Usuario:
-    def __init__(self, nome, login, senha):
-        self.nome = nome
-        self.login = login
-        self.senha = senha
-
-usuario01 = Usuario('Lorenzo', 'lnunez', 'lnunez')
-
-usuarios = {
-    usuario01.login : usuario01
-}
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
 app.secret_key = 'apredendodoiniciocomdaniel'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
+    SGBD = 'mysql+mysqlconnector',
+    usuario = 'root',
+    senha = 'toor',
+    servidor = 'localhost',
+    database = 'sitescape'
+)
+
+db = SQLAlchemy(app)
+
+class Musica(db.Model):
+    __tablename__ = 'ss_musics'
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    name = db.Column(db.String(100), nullable = False)
+    author = db.Column(db.String(100), nullable = False)
+    genre_id = db.Column(db.Integer, nullable = False)
+
+    def __repr__(self):
+        return '<Name %r>' %self.name
+
+class Usuario(db.Model):
+    __tablename__ = 'ss_users'
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    name = db.Column(db.String(100), nullable = False)
+    user = db.Column(db.String(100), nullable = False, unique = True)
+    password = db.Column(db.String(100), nullable = False)
+
+    def __repr__(self):
+        return '<Name %r>' %self.name
+
+class Genero(db.Model):
+    __tablename__ = 'ss_genres'
+    id = db.Column(db.Integer, primary_key = True, autoincrement = True)
+    name = db.Column(db.String(100), nullable = False, unique = True)
+
+    def __repr__(self):
+        return '<Name %r>' %self.name
 
 @app.route('/login')
 def login():
@@ -72,7 +89,13 @@ def adicionarMusica():
 def listarMusicas():
     if session['usuario_logado'] == None or 'usuario_logado' not in session:
         return redirect(url_for('login'))
+    
+    musicas = Musica.query.order_by(Musica.id)
 
-    return render_template('lista_musicas.html', title = "Musicas Cadastradas", musicas = lista)
+    for musica in musicas:
+        genero = Genero.query.get(musica.genre_id)
+        musica.genre_name = genero.name
+
+    return render_template('lista_musicas.html', title = "Musicas Cadastradas", musicas = musicas)
 
 app.run(debug=True)
