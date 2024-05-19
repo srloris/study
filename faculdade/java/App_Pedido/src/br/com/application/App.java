@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 
 import br.com.entities.Cliente;
 import br.com.entities.Pedido;
@@ -20,31 +16,6 @@ public class App {
         Scanner sc = new Scanner(System.in);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-
-        // Realiza coneção com BD
-        final String DBHOST = "//localhost:3306/";
-        final String DBUSER = "aluno";
-        final String DBPASS = "toor";
-        final String DB = "sitescape";
-
-        Connection conSitescape = DriverManager.getConnection("jdbc:mysql:" + DBHOST + DB, DBUSER, DBPASS);
-
-        String consulta = "";
-        String custom = "Maria do Bairro";
-        PreparedStatement pstm = null;
-        ResultSet rs = null;
-
-        consulta = "Select id FROM Cliente WHERE nome='"+custom+"'";
-
-        pstm = conSitescape.prepareStatement(consulta);
-        rs = pstm.executeQuery();
-
-        if(rs.next()){
-            String id = rs.getString(1);
-            System.out.println(id);
-        }
-        // --------
-
         ArrayList<Produto> produtos = new ArrayList<>();
 
         String flag = "s";
@@ -55,6 +26,7 @@ public class App {
             System.out.print("Valor: ");
             Double valor = sc.nextDouble();
             Produto prod = new Produto(descricao, valor);
+            prod.salvar();
             produtos.add(prod);
             sc.nextLine();
             System.out.print("Deseja cadastrar mais produtos ? (s/n) ");
@@ -72,6 +44,7 @@ public class App {
         Date dataNascimento = sdf.parse(sc.nextLine());
 
         Cliente cliente = new Cliente(nome, telefone, email, dataNascimento);
+        cliente.salvarCliente();
 
         Pedido pedido = new Pedido(1, cliente, produtos);
 

@@ -1,5 +1,7 @@
 package br.com.entities;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -60,6 +62,21 @@ public class Pessoa {
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+    public void salvarCliente() {
+		
+		try (Connection conector = DB_Conection.conectar()){
+			
+			PreparedStatement pstm = conector.prepareStatement("INSERT INTO SS_Cliente(nome, telefone, email, data_nascimento) values (?,?,?,?)");
+			pstm.setString(1, nome);
+			pstm.setString(2, telefone);
+			pstm.setString(3, email);
+			pstm.setDate(4, new java.sql.Date(dataNascimento.getTime()));
+			pstm.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
     @Override
     public String toString(){
