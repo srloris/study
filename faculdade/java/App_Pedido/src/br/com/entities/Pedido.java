@@ -7,8 +7,8 @@ public class Pedido {
     private Double total = 0.0;
     private Cliente cliente;
     private ArrayList<Produto> produtos = new ArrayList<>();
-    
-    public Pedido(){
+
+    public Pedido() {
 
     }
 
@@ -42,7 +42,7 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public void mostrarPedido(){
+    public void mostrarPedido() {
         System.out.println("---------------------------------");
         System.out.println("NÚMERO DO PEDIDO: " + this.numero);
         System.out.println("---------------------------------");
@@ -52,7 +52,7 @@ public class Pedido {
         System.out.println("---------------------------------");
         System.out.println("ITEM DO PEDIDO");
         System.out.println("---------------------------------");
-        for(Produto produto : this.produtos){
+        for (Produto produto : this.produtos) {
             System.out.println("Descrição do Produto: " + produto.getDescricao());
             System.out.println("Valor do Produto: R$ " + String.format("%.2f", produto.getValor()));
             this.total += produto.getValor();
@@ -63,7 +63,7 @@ public class Pedido {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Número: " + this.numero + "Total: " + this.total + "Cleinte: " + cliente.toString();
     }
 }

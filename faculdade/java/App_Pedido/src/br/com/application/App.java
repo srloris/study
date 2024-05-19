@@ -19,7 +19,7 @@ public class App {
         ArrayList<Produto> produtos = new ArrayList<>();
 
         String flag = "s";
-        while(flag.equals("s")){
+        while (flag.equals("s")) {
             System.out.println("Digite os dados do Produto");
             System.out.print("Descrição: ");
             String descricao = sc.nextLine();
