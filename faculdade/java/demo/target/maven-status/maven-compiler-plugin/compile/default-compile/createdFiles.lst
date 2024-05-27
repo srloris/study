@@ -1,0 +1,7 @@
+br\com\entities\Pedido.class
+br\com\entities\Pessoa.class
+br\com\servlets\ProdutoServlet.class
+br\com\application\App.class
+br\com\entities\DB_Conection.class
+br\com\entities\Cliente.class
+br\com\entities\Produto.class
