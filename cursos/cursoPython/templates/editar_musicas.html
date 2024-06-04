@@ -1,0 +1,49 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+<form action="{{ url_for('atualizar') }}" method="post">
+    <fieldset>
+        <input type="hidden" name="id" value="{{ musica.id }}">
+        <div class="mb-3">
+            <label for="musicName">Nome da Música:</label>
+            <input type="text" id="musicName" name="musicName" class="form-control" value="{{ musica.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="author">Autor:</label>
+            <input type="text" id="author" name="author" class="form-control" value="{{ musica.author }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="genre">Gênero:</label>
+            <select id="genre" name="genre" class="form-select" required>
+                <option value="">Selecione o Gênero</option>
+                <option value="acoustic" {% if genero.name == 'acoustic' %}selected{% endif %}>Acústica</option>
+                <option value="alternative" {% if genero.name == 'alternative' %}selected{% endif %}>Alternativa</option>
+                <option value="blues" {% if genero.name == 'blues' %}selected{% endif %}>Blues</option>
+                <option value="classical" {% if genero.name == 'classical' %}selected{% endif %}>Clássica</option>
+                <option value="country" {% if genero.name == 'country' %}selected{% endif %}>Country</option>
+                <option value="dance" {% if genero.name == 'dance' %}selected{% endif %}>Dance</option>
+                <option value="disco" {% if genero.name == 'disco' %}selected{% endif %}>Disco</option>
+                <option value="eletronic" {% if genero.name == 'eletronic' %}selected{% endif %}>Eletrônica</option>
+                <option value="folk" {% if genero.name == 'folk' %}selected{% endif %}>Folk</option>
+                <option value="funk" {% if genero.name == 'funk' %}selected{% endif %}>Funk</option>
+                <option value="gospel" {% if genero.name == 'gospel' %}selected{% endif %}>Gospel</option>
+                <option value="hiphop" {% if genero.name == 'hiphop' %}selected{% endif %}>Hip Hop</option>
+                <option value="indie" {% if genero.name == 'indie' %}selected{% endif %}>Indie</option>
+                <option value="jazz" {% if genero.name == 'jazz' %}selected{% endif %}>Jazz</option>
+                <option value="metal" {% if genero.name == 'metal' %}selected{% endif %}>Metal</option>
+                <option value="MPB" {% if genero.name == 'MPB' %}selected{% endif %}>MPB</option>
+                <option value="pop" {% if genero.name == 'pop' %}selected{% endif %}>Pop</option>
+                <option value="punk" {% if genero.name == 'punk' %}selected{% endif %}>Punk</option>
+                <option value="rap" {% if genero.name == 'rap' %}selected{% endif %}>Rap</option>
+                <option value="reggae" {% if genero.name == 'reggae' %}selected{% endif %}>Reggae</option>
+                <option value="rock" {% if genero.name == 'rock' %}selected{% endif %}>Rock</option>
+                <option value="samba" {% if genero.name == 'samba' %}selected{% endif %}>Samba</option>
+                <option value="techno" {% if genero.name == 'techno' %}selected{% endif %}>Techno</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>
+{% endblock %}

@@ -7,6 +7,7 @@
             <th>Música</th>
             <th>Cantor / Grupo / Banda</th>
             <th>Genêro</th>
+            <th colspan="2">Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -14,7 +15,9 @@
         <tr>
             <td>{{ music.name }}</td>
             <td>{{ music.author }}</td>
-            <td>{{ music.genre_name }}</td>
+            <td>{{ genero.name }}</td>
+            <td><input type="button" value="Editar" class="btn btn-dark" onclick="window.location.href='{{ url_for('editar', id=music.id) }}'"></td>
+            <td><input type="button" value="Apagar" class="btn btn-danger btn-icon-split" onclick="window.location.href='{{ url_for('excluir', id=music.id) }}'"></td>
         </tr>
         {% endfor %}
     </tbody>

@@ -1,0 +1,22 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+
+<h2>{{ title }}</h2>
+<form action="/atualizar_perfil" method="post">
+    <fieldset>
+        <div class="mb-3">
+            <label for="usuario">Username:</label>
+            <input type="text" id="usuario" name="usuario" class="form-control" value="{{ usuario }}" disabled>
+        </div>
+        <div class="mb-3">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </fieldset>
+</form>
+
+{% endblock %}

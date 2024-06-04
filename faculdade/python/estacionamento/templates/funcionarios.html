@@ -1,0 +1,233 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+
+<style>
+    .width-fix {
+        width: 16rem !important;
+    }
+
+    .width-fix-btn{
+        margin-right: 1rem;
+    }
+
+
+    #dataTable_filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 10000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 70%;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+</style>
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">{{ title }}</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Endereço</th>
+                            <th>CEP</th>
+                            <th>CPF</th>
+                            <th>Celular</th>
+                            <th>Email</th>
+                            <th class="width-fix">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for funcionario in funcionarios %}
+                        <tr>
+                            <td>{{ funcionario.nome }}</td>
+                            <td>{{ funcionario.endereco }}</td>
+                            <td>{{ funcionario.cep }}</td>
+                            <td>{{ funcionario.cpf }}</td>
+                            <td>{{ funcionario.celular }}</td>
+                            <td>{{ funcionario.email }}</td>
+                            <td>
+                                <a class="btn btn-warning btn-icon-split" href="#"
+                                    onclick="editarFuncionario({{ funcionario.id }}, '{{ funcionario.nome }}', '{{ funcionario.endereco }}', '{{ funcionario.cep }}', '{{ funcionario.cpf }}', '{{ funcionario.celular }}', '{{ funcionario.email }}')">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </span>
+                                    <span class="text">Editar</span>
+                                </a>
+                                <a class="btn btn-danger btn-icon-split"
+                                    onclick="window.location.href='{{ url_for('excluirFuncionario', id=funcionario.id) }}'">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                    <span class="text">Excluir</span>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Cadastrar/Editar Funcionário</h2>
+            <form id="funcionarioForm" action="/adicionarFuncionario" method="post">
+                <fieldset>
+                    <input type="hidden" id="funcionarioId" name="id">
+                    <div class="mb-3">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="endereco">Endereço:</label>
+                        <input type="text" id="endereco" name="endereco" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cep">CEP:</label>
+                        <input type="text" id="cep" name="cep" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cpf">CPF:</label>
+                        <input type="text" id="cpf" name="cpf" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="celular">Celular:</label>
+                        <input type="text" id="celular" name="celular" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function criarBotao() {
+        // Criar o elemento 'a'
+        var link = document.createElement('a');
+        link.id = 'openModalBtn';
+        link.href = '#';
+        link.className = 'btn btn-success btn-icon-split width-fix-btn';
+
+        // Criar o primeiro span
+        var spanIcon = document.createElement('span');
+        spanIcon.className = 'icon text-white-50';
+
+        // Criar o ícone dentro do primeiro span
+        var icon = document.createElement('i');
+        icon.className = 'fas fa-check';
+
+        // Adicionar o ícone ao primeiro span
+        spanIcon.appendChild(icon);
+
+        // Criar o segundo span
+        var spanText = document.createElement('span');
+        spanText.className = 'text';
+        spanText.textContent = 'Cadastrar';
+
+        // Adicionar os spans ao link
+        link.appendChild(spanIcon);
+        link.appendChild(spanText);
+
+        // Encontrar o elemento pai e adiciona o link como filho
+        var pai = document.getElementById('dataTable_filter');
+        pai.appendChild(link);
+    }
+
+    function editarFuncionario(id, nome, endereco, cep, cpf, celular, email) {
+        document.getElementById('funcionarioId').value = id;
+        document.getElementById('nome').value = nome;
+        document.getElementById('endereco').value = endereco;
+        document.getElementById('cep').value = cep;
+        document.getElementById('cpf').value = cpf;
+        document.getElementById('celular').value = celular;
+        document.getElementById('email').value = email;
+
+        var form = document.getElementById('funcionarioForm');
+        form.action = `/editarFuncionario/${id}`;
+
+        var modal = document.getElementById('myModal');
+        modal.style.display = "block";
+    }
+
+    setTimeout(function () {
+        criarBotao();
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("openModalBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }, 300);
+
+</script>
+
+{% endblock %}
