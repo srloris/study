@@ -13,6 +13,7 @@ public class Pessoa {
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+    private Integer id;
     private String nome;
     private String telefone;
     private String email;
@@ -33,6 +34,22 @@ public class Pessoa {
         this.telefone = telefone;
         this.email = email;
         this.dataNascimento = dataNascimento;
+    }
+
+    public Pessoa(String nome, String telefone, String email, Date dataNascimento, Integer id) {
+        this.id = id;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
+        this.dataNascimento = dataNascimento;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -106,7 +123,7 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return "Nome: " + this.nome + "Telefone: " + this.telefone + "Email: " + this.email + "Data de Nascimento"
+        return "Nome: " + this.nome + " Telefone: " + this.telefone + " Email: " + this.email + " Data de Nascimento: "
                 + sdf.format(this.dataNascimento);
     }
 

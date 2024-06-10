@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Produto {
+    private Integer id;
     private String descricao;
     private Double valor;
 
@@ -18,6 +19,20 @@ public class Produto {
     public Produto(String descricao, Double valor) {
         this.descricao = descricao;
         this.valor = valor;
+    }
+
+    public Produto(Integer id, String descricao, Double valor) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+    }
+
+    public Integer getId(){
+        return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public String getDescricao() {

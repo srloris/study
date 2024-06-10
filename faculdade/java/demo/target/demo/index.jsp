@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="<c:url value='/index.jsp'/>">Nicks Store</a>
+            <a class="navbar-brand" href="<c:url value='/index'/>">Nicks Store</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="<c:url value='/index.jsp'/>">Pedidos</a>
+                        <a class="nav-link" aria-current="page" href="<c:url value='/index'/>">Pedidos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="<c:url value='/pages/produtos'/>">Produtos</a>
@@ -43,19 +43,20 @@
         <table class="table table-dark table-hover">
             <thead>
                 <tr>
+                    <th>Número</th>
                     <th>Cliente</th>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
+                    <%-- <th>Produto</th> --%>
+                    <%-- <th>Quantidade</th> --%>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody id="tbody">
-                <%-- Exemplo de como iterar sobre uma lista de pedidos em Java --%>
                 <c:forEach var="pedido" items="${pedidos}">
                     <tr>
-                        <td>${pedido.cliente}</td>
-                        <td>${pedido.produto}</td>
-                        <td>${pedido.quantidade}</td>
+                        <td>${pedido.numero}</td>
+                        <td>${pedido.cliente.nome}</td>
+                        <%-- <td>${pedido.produto.descricao}</td> --%>
+                        <%-- <td>${pedido.itensPedido.quantidade}</td> --%>
                         <td>${pedido.total}</td>
                     </tr>
                 </c:forEach>
